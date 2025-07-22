@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: your-app
+  name: myapp
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: your-app
+      app: myapp
   template:
     metadata:
       labels:
-        app: your-app
+        app: myapp
     spec:
       containers:
-      - name: your-app
+      - name: myapp
         image: gcr.io/YOUR_PROJECT_ID/your-app:latest
         ports:
         - containerPort: 80
