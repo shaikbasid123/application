@@ -43,8 +43,8 @@ jobs:
 
       - name: Deploy to GKE
         run: |
-          kubectl apply -f k8s/deployment.yaml
-          kubectl apply -f k8s/service.yaml
+          kubectl apply -f k8s/deployment.yml
+          kubectl apply -f k8s/service.yml
 
     #   - name: Notify on Failure
     #     if: failure()
