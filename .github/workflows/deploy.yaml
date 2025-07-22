@@ -1,0 +1,63 @@
+name: Build, Push, and Deploy to GKE
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-push-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Authenticate to GCP
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_CREDENTIALS }}
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+
+      - name: Configure Docker for GCR
+        run: gcloud auth configure-docker
+
+      - name: Build Docker Image
+        run: |
+          docker build -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/your-app:latest .
+
+      - name: Push Docker Image
+        run: |
+          docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/your-app:latest
+
+      - name: Set up kubectl
+        uses: azure/setup-kubectl@v4
+        with:
+          version: 'latest'
+
+      - name: Get GKE Credentials
+        run: |
+          gcloud container clusters get-credentials tf-gke-cluster --region us-central1-a --project ${{ secrets.GCP_PROJECT_ID }}
+
+      - name: Deploy to GKE
+        run: |
+          kubectl apply -f k8s/deployment.yaml
+          kubectl apply -f k8s/service.yaml
+
+    #   - name: Notify on Failure
+    #     if: failure()
+    #     uses: rtCamp/action-slack-notify@v2
+    #     env:
+    #       SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+    #       SLACK_COLOR: '#FF0000'
+    #       SLACK_MESSAGE: 'Deployment to GKE failed. Check the pipeline.'
+
+    #   - name: Notify on Success
+    #     if: success()
+    #     uses: rtCamp/action-slack-notify@v2
+    #     env:
+    #       SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+    #       SLACK_COLOR: '#00FF00'
+    #       SLACK_MESSAGE: 'Successfully deployed to GKE.'

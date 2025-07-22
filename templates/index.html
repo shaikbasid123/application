@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        /* Add your custom CSS styles here */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f7f7f7;
+        }
+        .navbar {
+            background-color: #333;
+            color: white;
+            overflow: hidden;
+        }
+        .navbar a {
+            float: left;
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+        .navbar a:hover {
+            background-color: #ddd;
+            color: rgb(0, 0, 0);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-top: 30px;
+        }
+        form {
+            width: 40%; /* Adjusted width for the form */
+            margin: 20px auto;
+            background-color: #6e80ce;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #ebe2e2;
+            text-align: left;
+        }
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        textarea {
+            width: calc(100% - 12px);
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-bottom: 15px;
+        }
+        input[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        .top-bar {
+            background-color: rgb(25, 25, 105); /* Change the background color */
+            color: #e7f1f4; /* Change the text color */
+            padding: 8px;
+            font-size: 24px;
+            font-family: Arial, sans-serif; /* Change the font family */
+
+        }
+        .right-links a {
+            color: white;
+            text-decoration: none;
+            margin-left: auto;
+        }
+        .btn {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            text-decoration: none; /* Remove underline */
+            position: absolute;
+            top: 120px; /* Move down */
+            right: 120px; /* Move to the right */
+        }
+    </style>
+</head>
+<body>
+    <!-- <div class="navbar">
+        <a href="/">Home</a>
+        <a href="/get-data">Fetch Data</a>
+       
+    </div> -->
+    
+    <div class="top-bar">
+        <div class="container">
+            <img src="https://storage.googleapis.com/bkt-static-tt/logo.png" width="60" height="60" class="logo" alt="">
+            TechTrapture User Management
+        </div>
+        
+    </div>
+    <a href="/get-data" class="btn">Fetch Data</a>
+    <h1>Add New User</h1>
+    <form action="/submit" method="post">
+        <label for="name">Name:</label><br>
+        <input type="text" id="name" name="name" required><br><br>
+        
+        <label for="email">Email:</label><br>
+        <input type="email" id="email" name="email" required><br><br>
+
+        <label for="password">Password:</label><br>
+        <input type="password" id="password" name="password" required><br><br>
+        
+        <label for="address">Address:</label><br>
+        <textarea id="address" name="address" required></textarea><br><br>
+        
+        <label for="phonenumber">Phone Number:</label><br>
+        <input type="text" id="phonenumber" name="phonenumber" required><br><br>
+        
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>

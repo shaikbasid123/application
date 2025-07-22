@@ -1,0 +1,41 @@
+name: PR Tests and Scans
+
+on:
+  pull_request:
+
+jobs:
+  test-and-scan:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+
+      - name: Run Unit and Integration Tests
+        run: |
+          pytest tests/
+
+      - name: Run Dependency Vulnerability Scan
+        uses: pyupio/safety-action@v1
+
+      - name: Container Vulnerability Scan
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: 'docker.io/library/your-app:latest'
+
+    #   - name: Notify on Failure
+    #     if: failure()
+    #     uses: rtCamp/action-slack-notify@v2
+    #     env:
+    #       SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+    #       SLACK_COLOR: '#FF0000'
+    #       SLACK_MESSAGE: 'PR Tests or Scans Failed. Please check the pipeline.'
